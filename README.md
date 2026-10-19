@@ -70,9 +70,9 @@ When the application boots, `DataSeeder` automatically initializes Indian states
 
 | Role | Email | Password | Permissions |
 | :--- | :--- | :--- | :--- |
-| **Super Admin** | `admin@meramahan.in` | `Admin@1234` | Full platform governance, user management, metrics, moderation |
-| **Moderator** | `moderator@meramahan.in` | `Moderator@1234` | Report verification, status updates, content abuse resolution |
-| **Citizen** | `citizen@meramahan.in` | `Citizen@1234` | Report submission, likes, community comments, bookmarking |
+| **Super Admin** | `admin@meramahan.in` |  | Full platform governance, user management, metrics, moderation |
+| **Moderator** | `moderator@meramahan.in` | `` | Report verification, status updates, content abuse resolution |
+| **Citizen** | `citizen@meramahan.in` | `` | Report submission, likes, community comments, bookmarking |
 
 ---
 
