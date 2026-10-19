@@ -1,50 +1,35 @@
-# ==============================================================================
+
 # Build Stage
-# ==============================================================================
-FROM eclipse-temurin:21-jdk-jammy AS builder
+FROM maven:3.9-eclipse-temurin-21 AS builder
 
 WORKDIR /build
 
-# Copy Maven wrapper and pom.xml first to take advantage of Docker layer caching
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
+# Copy Maven project configuration
+COPY pom.xml .
 
-# Make wrapper executable
-RUN chmod +x mvnw
+# Download dependencies
+RUN mvn dependency:go-offline -B
 
-# Download dependencies offline
-RUN ./mvnw dependency:go-offline -B
-
-# Copy source code and build production jar
+# Copy source code and build the application
 COPY src/ ./src/
-RUN ./mvnw clean package -DskipTests -B
+RUN mvn clean package -DskipTests -B
 
-# ==============================================================================
 # Production Runtime Stage
-# ==============================================================================
 FROM eclipse-temurin:21-jre-jammy
-
-LABEL maintainer="MeraMahan Platform Engineering <dev@meramahan.in>"
-LABEL description="MeraMahan - Citizen Reporting & Community Awareness Platform Backend"
-
-# Create a non-privileged application user and group
-RUN addgroup --system meramahan && adduser --system --ingroup meramahan meramahan
 
 WORKDIR /app
 
-# Create upload directory and set ownership
+# Create a non-root user
+RUN addgroup --system meramahan && adduser --system --ingroup meramahan meramahan
+
+# Create upload directory
 RUN mkdir -p /app/uploads && chown -R meramahan:meramahan /app
 
-# Copy built artifact from builder stage
+# Copy the packaged JAR
 COPY --from=builder --chown=meramahan:meramahan /build/target/meramahan-backend-1.0.0.jar /app/app.jar
 
 USER meramahan
 
 EXPOSE 8080
 
-# Configure JVM tuning and execute jar
-ENTRYPOINT ["java", \
-    "-XX:+UseContainerSupport", \
-    "-XX:MaxRAMPercentage=75.0", \
-    "-Djava.security.egd=file:/dev/./urandom", \
-    "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/app.jar"]
