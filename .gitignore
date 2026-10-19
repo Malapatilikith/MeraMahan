@@ -1,0 +1,27 @@
+# Maven / Java
+tools/
+**/target/
+*.class
+.mvn/
+*.jar
+*.war
+
+# Node / React
+**/node_modules/
+**/dist/
+**/build/
+.env.local
+.env.*.local
+*.log
+
+# IDE & OS
+.DS_Store
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Local uploads storage
+backend/uploads/
+**/uploads/
