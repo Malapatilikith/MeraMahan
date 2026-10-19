@@ -1,4 +1,4 @@
-# MeraMahan (मेरा महान)
+# MeraMahan
 ### *Your Voice. Your Community. Your India.*
 
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.1-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
