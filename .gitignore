@@ -25,3 +25,6 @@ tools/
 # Local uploads storage
 backend/uploads/
 **/uploads/
+
+# Local H2 database
+backend/data/meramahandb.mv.db
