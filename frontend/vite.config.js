@@ -12,7 +12,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       '/uploads': {
-        target: 'http://localhost:8080',
+        target: 'https://meramahan-backend.onrender.com',
         changeOrigin: true,
       },
     },
